@@ -30,4 +30,32 @@ public class MyfileDAO extends DBConnPool {
 		return applyResult;
 	}
 
+	public List<MyfileDTO> myFileList() {
+		List<MyfileDTO> fileList = new Vector<MyfileDTO>();
+
+		String query = "SELECT * FROM myfile ORDER BY idx DESC";
+		try {
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				MyfileDTO dto = new MyfileDTO();
+				dto.setIdx(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setCate(rs.getString(4));
+				dto.setOfile(rs.getString(5));
+				dto.setSfile(rs.getString(6));
+				dto.setPostdate(rs.getString(7));
+
+				fileList.add(dto);
+			}
+
+		} catch (Exception e) {
+			System.out.print("SELECT 시 예외 발생");
+			e.printStackTrace();
+		}
+		return fileList;
+	}
+
 }
